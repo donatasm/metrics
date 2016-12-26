@@ -1,0 +1,19 @@
+version: '2'
+services:
+  grafana:
+    image: grafana/grafana:4.1.0-beta1
+    volumes:
+      - /var/lib/grafana
+    ports:
+      - 3000:3000
+    links:
+      - graphite
+  graphite:
+    image: sitespeedio/graphite:latest
+    volumes:
+      - ./data/graphite/storage/whisper:/opt/graphite/storage/whisper
+      - ./graphite/storage-schemas.conf:/opt/graphite/conf/storage-schemas.conf
+      - ./graphite/storage-aggregation.conf:/opt/graphite/conf/storage-aggregation.conf
+    ports:
+      - 8080:80
+      - 2003:2003
